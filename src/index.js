@@ -1,5 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const game_1 = require("./game");
-const app = new game_1.Game();
+import { Game } from './game.ts';
+
+const app = new Game();
 app.start();

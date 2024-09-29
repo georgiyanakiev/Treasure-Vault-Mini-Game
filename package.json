@@ -1,22 +1,16 @@
 {
-  "name": "treasure-vault-mini-game",
+  "name": "your-project-name",
   "version": "1.0.0",
-  "description": "A mini game where the player unlocks a treasure vault using PIXI.js and TypeScript.",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "dependencies": {
-    "gsap": "^3.12.5",
-    "pixi.js": "^8.4.1"
+    "gsap": "^3.0.0",
+    "pixi.js": "^7.0.0"
   },
   "devDependencies": {
-    "@types/pixi.js": "^4.8.9",
-    "parcel": "^2.0.0",
-    "typescript": "^4.9.5",
-    "vite": "^5.4.8"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "vite": "^3.2.11"
+  }
 }
