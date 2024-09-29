@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { Vault } from './vault';
+import { Vault } from './vault.js';
 
 export class Game {
     private app: PIXI.Application;
