@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { Vault } from './vault.js';
+import { Vault } from './vault';
 
 export class Game {
     private app: PIXI.Application;
@@ -7,7 +7,8 @@ export class Game {
 
     constructor() {
         this.app = new PIXI.Application({ width: 800, height: 600 });
-        document.getElementById('game-container')?.appendChild(this.app.view);
+        // Cast this.app.view to HTMLCanvasElement before appending to the DOM
+        document.getElementById('game-container')?.appendChild(this.app.view as HTMLCanvasElement);
         this.vault = new Vault(this.app);
     }
 
