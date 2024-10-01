@@ -1,7 +1,9 @@
 {
-  "name": "your-project-name",
+  "name": "Treasure-Vault-Mini_Game",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
+    "start": "node index.js",
     "dev": "vite",
      "build": "webpack",
     "serve": "vite preview"
