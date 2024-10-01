@@ -1,7 +1,9 @@
 import * as PIXI from 'pixi.js';
+import { Vault } from './vault'; // Import the Vault class
 
 export class Game {
     private app: PIXI.Application;
+    private vault!: Vault; // Use the definite assignment assertion
 
     constructor() {
         // Initialize the PIXI application with a background color
@@ -19,14 +21,9 @@ export class Game {
     }
 
     private setup() {
-        // Create graphics and add them to the stage
-        const graphics = new PIXI.Graphics();
-        graphics.beginFill(0xff0000); // Red color
-        graphics.drawRect(50, 50, 100, 100); // Draw a rectangle
-        graphics.endFill();
-
-        // Add the graphics to the stage
-        this.app.stage.addChild(graphics);
+        // Create an instance of the Vault class and set it up
+        this.vault = new Vault(this.app);
+        this.vault.setup(); // Call the setup method for the vault
     }
 }
 
