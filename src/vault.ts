@@ -1,12 +1,6 @@
 import * as PIXI from 'pixi.js'; 
 import { gsap } from 'gsap';
 
-declare module 'pixi.js' {
-    interface Sprite {
-      buttonMode: boolean;
-    }
-  }
-
 export class Vault {
     private app: PIXI.Application;
     private vault: PIXI.Sprite;
@@ -34,7 +28,7 @@ export class Vault {
         this.door = new PIXI.Sprite(PIXI.Texture.from('assets/door.png')); // Placeholder path
         this.doorOpen = new PIXI.Sprite(PIXI.Texture.from('assets/doorOpen.png')); // Placeholder path
         this.doorOpenShadow = new PIXI.Sprite(PIXI.Texture.from('assets/doorOpenShadow.png')); // Placeholder path
-        this.blinkEffect = new PIXI.Sprite(PIXI.Texture.from('assets/blink.png')); // Placeholder path for glitter effect
+        this.blinkEffect = new PIXI.Sprite(PIXI.Texture.from('assets/blinkEffect.png')); // Placeholder path for glitter effect
         this.secretCombination = this.generateSecretCombination();
         this.currentInput = [];
         this.isLocked = true;
@@ -97,7 +91,7 @@ export class Vault {
         this.treasure.visible = false; // Hide treasure initially
     }
 
-    private onHandleClick(event: PIXI.FederatedPointerEvent) {
+    private onHandleClick(event: PIXI.interaction.InteractionEvent) {
         if (!this.isLocked) return; // Ignore clicks if vault is unlocked
 
         // Get the clicked position relative to the handle
