@@ -3,9 +3,10 @@ import * as PIXI from 'pixi.js';
 export class Game {
     private app: PIXI.Application;
     private handle!: PIXI.Graphics;
+    private vault!: PIXI.Graphics; // Define vault as a class property
     private vaultOpen: boolean = false;
-    private secretCombination: Array<{number: number, direction: 'clockwise' | 'counterclockwise'}> = [];
-    private userInput: Array<{number: number, direction: 'clockwise' | 'counterclockwise'}> = [];
+    private secretCombination: Array<{ number: number; direction: 'clockwise' | 'counterclockwise' }> = [];
+    private userInput: Array<{ number: number; direction: 'clockwise' | 'counterclockwise' }> = [];
 
     constructor() {
         this.app = new PIXI.Application({
@@ -32,11 +33,11 @@ export class Game {
     }
 
     private createVault() {
-        const vault = new PIXI.Graphics();
-        vault.beginFill(0x444444); // Vault color
-        vault.drawRect(300, 200, 200, 200); // Draw vault door
-        vault.endFill();
-        this.app.stage.addChild(vault);
+        this.vault = new PIXI.Graphics(); // Initialize the vault
+        this.vault.beginFill(0x444444); // Vault color
+        this.vault.drawRect(300, 200, 200, 200); // Draw vault door
+        this.vault.endFill();
+        this.app.stage.addChild(this.vault);
     }
 
     private createHandle() {
@@ -98,8 +99,7 @@ export class Game {
 
     private openVault() {
         this.vaultOpen = true;
-        const vault = this.app.stage.children[0]; // Get the vault
-        vault.alpha = 0; // Fade out vault door
+        this.vault.alpha = 0; // Fade out vault door
 
         // Show treasure
         const treasure = new PIXI.Graphics();
@@ -138,7 +138,18 @@ export class Game {
 
     private startAnimation() {
         this.app.ticker.add(() => {
-            // You can add any other animations or updates here
+            // Make the vault pulse gently to attract attention
+            if (!this.vaultOpen) {
+                gsap.to(this.vault.scale, {
+                    x: 1.05,
+                    y: 1.05,
+                    duration: 1,
+                    ease: "power1.inOut",
+                    yoyo: true,
+                    repeat: -1,
+                    paused: !this.vaultOpen // Pause when the vault is open
+                });
+            }
         });
     }
 }
