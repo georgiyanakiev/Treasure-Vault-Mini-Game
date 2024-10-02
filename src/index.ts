@@ -6,6 +6,7 @@ export class Vault {
 
     constructor(app: PIXI.Application) {
         this.app = app;
+        
     }
 
     // Method to load assets and set up the vault
