@@ -1,171 +1,122 @@
 import * as PIXI from 'pixi.js';
+import { gsap } from 'gsap';
 
 export class Game {
     private app: PIXI.Application;
-    private handle!: PIXI.Graphics;
-    private vault!: PIXI.Graphics; // Define vault as a class property
-    private vaultOpen: boolean = false;
-    private secretCombination: Array<{ number: number; direction: 'clockwise' | 'counterclockwise' }> = [];
-    private userInput: Array<{ number: number; direction: 'clockwise' | 'counterclockwise' }> = [];
+    private assets: { [key: string]: PIXI.Texture } = {}; // Store loaded textures
 
     constructor() {
-        this.app = new PIXI.Application({
-            width: 800,
-            height: 600,
-            backgroundColor: 0x1099bb,
+        // Initialize the PIXI application
+        this.app = new PIXI.Application({ 
+            width: 800, 
+            height: 600, 
+            backgroundColor: 0x1099bb 
         });
 
-        // Append the PIXI canvas (app.view) to the game container div
-        const container = document.getElementById('game-container');
-        if (container) {
-            container.appendChild(this.app.view);
-        } else {
-            console.error("Game container not found!");
-        }
-        
-        this.generateSecretCombination();
-        this.createVault();
-        this.createHandle();
-        this.setupInteractions();
-        this.startAnimation();
-        this.start();
+        // Append the PIXI canvas to the HTML body
+        document.body.appendChild(this.app.view);
+
+        // Start loading assets
+        this.setup();
     }
 
-    private generateSecretCombination() {
-        for (let i = 0; i < 3; i++) {
-            const number = Math.floor(Math.random() * 9) + 1;
-            const direction = Math.random() < 0.5 ? 'clockwise' : 'counterclockwise';
-            this.secretCombination.push({ number, direction });
-        }
-        console.log('Secret Combination:', this.secretCombination);
-    }
-
-    private createVault() {
-        this.vault = new PIXI.Graphics(); // Initialize the vault
-        this.vault.beginFill(0x444444); // Vault color
-        this.vault.drawRect(300, 200, 200, 200); // Draw vault door
-        this.vault.endFill();
-        this.app.stage.addChild(this.vault);
-    }
-
-    private createHandle() {
-        this.handle = new PIXI.Graphics();
-        this.handle.beginFill(0x888888); // Handle color
-        this.handle.drawRect(370, 280, 60, 10); // Draw handle
-        this.handle.endFill();
-        this.app.stage.addChild(this.handle);
-    }
-
-    private setupInteractions() {
-        this.app.view.addEventListener('click', this.handleClick.bind(this));
-    }
-
-    private handleClick(event: MouseEvent) {
-        if (this.vaultOpen) return; // Do nothing if vault is already open
-        const localPosition = this.app.renderer.plugins.interaction.mouse.global;
-        const isLeftSide = localPosition.x < this.handle.x + this.handle.width / 2;
-
-        // Rotate handle
-        const direction = isLeftSide ? 'counterclockwise' : 'clockwise';
-        this.rotateHandle(direction);
-
-        // Record user input
-        const number = 1; // Each click is treated as 1 for now
-        this.userInput.push({ number, direction });
-
-        // Check if input matches the secret combination
-        if (this.userInput.length === this.secretCombination.length) {
-            this.checkCombination();
+    private async setup() {
+        try {
+            await this.loadAllAssets(); // Load all assets
+            this.createPreviewScene(); // Show the preview images
+            this.animatePreview(); // Animate the preview images with GSAP
+        } catch (error) {
+            console.error('Error loading assets:', error);
         }
     }
 
-    private rotateHandle(direction: 'clockwise' | 'counterclockwise') {
-        const rotationAmount = direction === 'clockwise' ? Math.PI / 3 : -Math.PI / 3; // 60 degrees in radians
-        this.handle.rotation += rotationAmount;
-        this.handle.scale.x = 1.1; // Slight scale up for animation
-        this.handle.scale.y = 0.9;
+    // Load all game assets including previews using PIXI.loader
+    private loadAllAssets(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const loader = PIXI.loader; // Use PIXI.loader for older versions
 
-        // Reset scale for next rotation
-        setTimeout(() => {
-            this.handle.scale.x = 1;
-            this.handle.scale.y = 1;
-        }, 100);
-    }
+            loader
+                .add('bg', 'assets/bg.png')
+                .add('blink', 'assets/blink.png')
+                .add('door', 'assets/door.png')
+                .add('doorOpen', 'assets/doorOpen.png')
+                .add('doorOpenShadow', 'assets/doorOpenShadow.png')
+                .add('handle', 'assets/handle.png')
+                .add('handleShadow', 'assets/handleShadow.png')
+                .add('vault', 'preview/vault.jpg') // Preview
+                .add('vaultOpen', 'preview/vaultOpen.jpg'); // Preview
 
-    private checkCombination() {
-        const isCorrect = this.userInput.every((input, index) => 
-            input.number === this.secretCombination[index].number && 
-            input.direction === this.secretCombination[index].direction
-        );
+            loader.load((_, resources) => {
+                if (resources) {
+                    // Store the loaded textures in the assets object
+                    this.assets = {
+                        'bg': resources['bg'].texture,
+                        'blink': resources['blink'].texture,
+                        'door': resources['door'].texture,
+                        'doorOpen': resources['doorOpen'].texture,
+                        'doorOpenShadow': resources['doorOpenShadow'].texture,
+                        'handle': resources['handle'].texture,
+                        'handleShadow': resources['handleShadow'].texture,
 
-        if (isCorrect) {
-            this.openVault();
-        } else {
-            this.resetGame();
-        }
-    }
-
-    private openVault() {
-        this.vaultOpen = true;
-        this.vault.alpha = 0; // Fade out vault door
-
-        // Show treasure
-        const treasure = new PIXI.Graphics();
-        treasure.beginFill(0xffd700); // Gold color
-        treasure.drawRect(350, 200, 100, 100); // Draw treasure
-        treasure.endFill();
-        this.app.stage.addChild(treasure);
-
-        // Glitter effect
-        this.glitterEffect(treasure);
-    }
-
-    private glitterEffect(treasure: PIXI.Graphics) {
-        const glitter = new PIXI.Graphics();
-        glitter.beginFill(0xffffff, 0.5); // White color for glitter
-        glitter.drawCircle(400, 250, 20); // Draw glitter
-        glitter.endFill();
-        this.app.stage.addChild(glitter);
-
-        // Animation for glitter
-        this.app.ticker.add(() => {
-            glitter.scale.x = Math.abs(Math.sin(Date.now() * 0.002));
-            glitter.scale.y = Math.abs(Math.sin(Date.now() * 0.002));
-            glitter.alpha = Math.abs(Math.sin(Date.now() * 0.005));
+                        // Previews
+                        'vault': resources['vault'].texture,
+                        'vaultOpen': resources['vaultOpen'].texture,
+                    };
+                    resolve();
+                } else {
+                    reject('Failed to load assets');
+                }
+            });
         });
     }
 
-    private resetGame() {
-        this.userInput = [];
-        this.secretCombination = [];
-        this.generateSecretCombination();
-        this.handle.rotation = 0; // Reset handle rotation
-        this.vaultOpen = false;
-        console.log('Game Reset! New Secret Combination:', this.secretCombination);
+    private createPreviewScene() {
+        // Create vault preview sprite
+        const vaultPreview = new PIXI.Sprite(this.assets['vault']);
+        vaultPreview.x = 150;
+        vaultPreview.y = 100;
+        vaultPreview.width = 200;
+        vaultPreview.height = 200;
+        vaultPreview.name = "vault"; // Set name for future reference
+        this.app.stage.addChild(vaultPreview);
+
+        // Create vault open preview sprite
+        const vaultOpenPreview = new PIXI.Sprite(this.assets['vaultOpen']);
+        vaultOpenPreview.x = 450;
+        vaultOpenPreview.y = 100;
+        vaultOpenPreview.width = 200;
+        vaultOpenPreview.height = 200;
+        vaultOpenPreview.name = "vaultOpen"; // Set name for future reference
+        this.app.stage.addChild(vaultOpenPreview);
     }
 
-    private startAnimation() {
-        this.app.ticker.add(() => {
-            // Make the vault pulse gently to attract attention
-            if (!this.vaultOpen) {
-                gsap.to(this.vault.scale, {
-                    x: 1.05,
-                    y: 1.05,
-                    duration: 1,
-                    ease: "power1.inOut",
-                    yoyo: true,
-                    repeat: -1,
-                    paused: !this.vaultOpen // Pause when the vault is open
-                });
-            }
-        });
-    }
+    // Animate the preview images using GSAP
+    private animatePreview() {
+        const vaultPreview = this.app.stage.getChildByName("vault");
+        const vaultOpenPreview = this.app.stage.getChildByName("vaultOpen");
 
-    public start() {
-        console.log('Game has started!');
+        if (vaultPreview && vaultOpenPreview) {
+            // GSAP animation for vaultPreview
+            gsap.to(vaultPreview.scale, {
+                x: 1.1,
+                y: 1.1,
+                duration: 1,
+                ease: "power1.inOut",
+                repeat: -1,
+                yoyo: true,
+            });
+
+            // GSAP animation for vaultOpenPreview
+            gsap.to(vaultOpenPreview, {
+                rotation: Math.PI * 2, // 360-degree rotation
+                duration: 3,
+                ease: "power1.inOut",
+                repeat: -1,
+                yoyo: true,
+            });
+        }
     }
 }
 
 // Start the game
 const game = new Game();
-game.start(); 
