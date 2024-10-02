@@ -1,31 +1,66 @@
 import * as PIXI from 'pixi.js';
-import { Vault } from './vault'; // Import the Vault class
 
-export class Game {
+export class Vault {
     private app: PIXI.Application;
-    private vault!: Vault; // Use the definite assignment assertion
+    private vaultSprite!: PIXI.Sprite;
 
-    constructor() {
-        // Initialize the PIXI application with a background color
-        this.app = new PIXI.Application({ 
-            width: 800, 
-            height: 600,
-            backgroundColor: 0x1099bb // Set the background color here
-        });
-
-        // Append the PIXI canvas (app.view) to the HTML body
-        document.body.appendChild(this.app.view);
-
-        // Start the game setup
-        this.setup();
+    constructor(app: PIXI.Application) {
+        this.app = app;
     }
 
-    private setup() {
-        // Create an instance of the Vault class and set it up
-        this.vault = new Vault(this.app);
-        this.vault.setup(); // Call the setup method for the vault
+    // Method to load assets and set up the vault
+    public async setup() {
+        try {
+            await this.loadAssets();
+            this.createVault();
+        } catch (error) {
+            console.error('Failed to load assets:', error);
+        }
+    }
+
+    // Load assets using promises
+    private loadAssets(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const loader = PIXI.loader; // Access the shared loader instance
+            loader
+                .add('bg', 'assets/bg.png')
+                .add('blink', 'assets/blink.png')
+                .add('door', 'assets/door.png')
+                .add('doorOpen', 'assets/doorOpen.png')
+                .add('doorOpenShadow', 'assets/doorOpenShadow.png')
+                .add('handle', 'assets/handle.png')
+                .add('handleShadow', 'assets/handleShadow.png')
+                .add('vault', 'preview/vault.jpg') // Preview
+                .add('vaultOpen', 'preview/vaultOpen.jpg') // Preview
+                .load((_, resources) => { // Loader instance and resources
+                    // Check if all resources are loaded
+                    if (
+                        resources.bg &&
+                        resources.blink &&
+                        resources.door &&
+                        resources.doorOpen &&
+                        resources.doorOpenShadow &&
+                        resources.handle &&
+                        resources.handleShadow &&
+                        resources.vault &&
+                        resources.vaultOpen
+                    ) {
+                        resolve();
+                    } else {
+                        reject('Failed to load one or more assets');
+                    }
+                });
+        });
+    }
+
+    // Method to create the vault sprite and add it to the stage
+    private createVault() {
+        const texture = PIXI.Texture.from('vault'); // Use the loaded resource
+        this.vaultSprite = new PIXI.Sprite(texture);
+        this.vaultSprite.x = 300; // Position X
+        this.vaultSprite.y = 200; // Position Y
+        this.vaultSprite.width = 200; // Set width of the vault
+        this.vaultSprite.height = 200; // Set height of the vault
+        this.app.stage.addChild(this.vaultSprite); // Add to the stage
     }
 }
-
-// Start the game
-const game = new Game();
