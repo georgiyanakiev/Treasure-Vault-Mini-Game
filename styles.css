@@ -8,9 +8,18 @@ body {
   display: flex; /* Use flexbox for layout */
   justify-content: center; /* Center contents horizontally */
   align-items: center; /* Center contents vertically */
+  flex-direction: column; /* Stack items vertically */
   height: 100vh; /* Full viewport height */
   background-image: url('bg.png'); /* Use background image for the game container */
   background-size: cover; /* Make the image cover the entire container */
+}
+
+/* Common styles for all divs inside the game container */
+#game-container div {
+  display: flex; /* Make each div a flexbox */
+  justify-content: center; /* Center inner content horizontally */
+  align-items: center; /* Center inner content vertically */
+  margin-bottom: 20px; /* Add some space between divs */
 }
 
 /* Blink background */
@@ -18,7 +27,7 @@ body {
   background-image: url('/blink.png');
   background-size: contain;
   width: 100px;
-  height: 300px;
+  height: 100px;
 }
 
 /* Door styling */
@@ -50,7 +59,7 @@ body {
   background-image: url('handle.png');
   background-size: contain;
   width: 200px;
-  height: 300px;
+  height: 100px;
 }
 
 /* Handle shadow styling */
@@ -58,7 +67,7 @@ body {
   background-image: url('handleShadow.png');
   background-size: contain;
   width: 200px;
-  height: 300px;
+  height: 100px;
 }
 
 /* Vault preview styling */
