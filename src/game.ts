@@ -15,7 +15,14 @@ export class Game {
             backgroundColor: 0x1099bb,
         });
 
-        document.body.appendChild(this.app.view);
+        // Append the PIXI canvas (app.view) to the game container div
+        const container = document.getElementById('game-container');
+        if (container) {
+            container.appendChild(this.app.view);
+        } else {
+            console.error("Game container not found!");
+        }
+        
         this.generateSecretCombination();
         this.createVault();
         this.createHandle();
