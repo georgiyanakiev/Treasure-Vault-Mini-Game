@@ -1,11 +1,11 @@
 {
-  "name": "Treasure-Vault-Mini_Game",
+  "name": "treasure-vault-mini_game",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start": "node index.js",
     "dev": "vite",
-     "build": "webpack",
+    "build": "webpack",
     "serve": "vite preview"
   },
   "dependencies": {
@@ -20,5 +20,10 @@
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
-  }
+  },
+  "description": "The **Treasure Vault Mini Game** is a fun and interactive mini-game where the player must unlock a vault by entering a secret combination of rotations. The game begins with the vault door closed, and a random secret combination is logged in the browser console. The player has to follow the instructions to rotate the handle in either a clockwise or counterclockwise direction, based on the generated combination.",
+  "main": "webpack.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
