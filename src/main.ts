@@ -1,5 +1,3 @@
-// src/main.ts
-
 import * as PIXI from 'pixi.js';
 
 // Game Class Definition

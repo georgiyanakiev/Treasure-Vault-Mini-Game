@@ -24,16 +24,16 @@ export class Vault {
         this.isLocked = true;
 
         // Initialize sprites (ensure you have all the paths correct)
-        this.background = new PIXI.Sprite(PIXI.Texture.from('assets/bg.jpg'));
-        this.vault = new PIXI.Sprite(PIXI.Texture.from('preview/vault.jpg'));
-        this.vaultOpen = new PIXI.Sprite(PIXI.Texture.from('preview/vaultOpen.png'));
-        this.handle = new PIXI.Sprite(PIXI.Texture.from('assets/handle.png'));
-        this.handleShadow = new PIXI.Sprite(PIXI.Texture.from('assets/handleShadow.png'));
-        this.treasure = new PIXI.Sprite(PIXI.Texture.from('assets/treasure.png'));
-        this.door = new PIXI.Sprite(PIXI.Texture.from('assets/door.png'));
-        this.doorOpen = new PIXI.Sprite(PIXI.Texture.from('assets/doorOpen.png'));
-        this.doorOpenShadow = new PIXI.Sprite(PIXI.Texture.from('assets/doorOpenShadow.png'));
-        this.blinkEffect = new PIXI.Sprite(PIXI.Texture.from('assets/blinkEffect.png'));
+        this.background = new PIXI.Sprite(PIXI.Texture.from('bg.jpg'));
+        this.vault = new PIXI.Sprite(PIXI.Texture.from('vault.jpg'));
+        this.vaultOpen = new PIXI.Sprite(PIXI.Texture.from('vaultOpen.png'));
+        this.handle = new PIXI.Sprite(PIXI.Texture.from('handle.png'));
+        this.handleShadow = new PIXI.Sprite(PIXI.Texture.from('handleShadow.png'));
+        this.treasure = new PIXI.Sprite(PIXI.Texture.from('treasure.png'));
+        this.door = new PIXI.Sprite(PIXI.Texture.from('door.png'));
+        this.doorOpen = new PIXI.Sprite(PIXI.Texture.from('doorOpen.png'));
+        this.doorOpenShadow = new PIXI.Sprite(PIXI.Texture.from('doorOpenShadow.png'));
+        this.blinkEffect = new PIXI.Sprite(PIXI.Texture.from('blinkEffect.png'));
     }
 
     public setup() {

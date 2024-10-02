@@ -1,12 +1,14 @@
 body {
-  margin: 0;
-  overflow: hidden;
+  margin: 0; /* Remove default margin from the body */
+  overflow: hidden; /* Prevent scrolling if the content overflows */
 }
 
 #game-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #19a87d;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center contents horizontally */
+  align-items: center; /* Center contents vertically */
+  height: 100vh; /* Full viewport height */
+  background-color: #19a87d; /* Set a vibrant green background color */
+  background-image: url('bg.png'); /* Ensure the path is correct */
+  background-size: cover; /* Make the image cover the entire container */
 }
