@@ -61839,18 +61839,6 @@ function sayHello(type) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -61859,7 +61847,7 @@ function sayHello(type) {
 /******/ 	/* webpack/runtime/load script */
 /******/ 	(() => {
 /******/ 		var inProgress = {};
-/******/ 		var dataWebpackPrefix = "your-project-name:";
+/******/ 		var dataWebpackPrefix = "treasure-vault-mini_game:";
 /******/ 		// loadScript function to load a script via script tag
 /******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
 /******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
@@ -61915,25 +61903,7 @@ function sayHello(type) {
 /******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
-/******/ 		var scriptUrl;
-/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
-/******/ 		var document = __webpack_require__.g.document;
-/******/ 		if (!scriptUrl && document) {
-/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
-/******/ 				scriptUrl = document.currentScript.src;
-/******/ 			if (!scriptUrl) {
-/******/ 				var scripts = document.getElementsByTagName("script");
-/******/ 				if(scripts.length) {
-/******/ 					var i = scripts.length - 1;
-/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
-/******/ 				}
-/******/ 			}
-/******/ 		}
-/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
-/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
-/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
-/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
-/******/ 		__webpack_require__.p = scriptUrl;
+/******/ 		__webpack_require__.p = "/";
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
@@ -62021,7 +61991,7 @@ function sayHello(type) {
 /******/ 		
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkyour_project_name"] = self["webpackChunkyour_project_name"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunktreasure_vault_mini_game"] = self["webpackChunktreasure_vault_mini_game"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
@@ -62036,33 +62006,79 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Game: () => (/* binding */ Game)
+/* harmony export */   Vault: () => (/* binding */ Vault)
 /* harmony export */ });
 /* harmony import */ var pixi_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pixi.js */ "./node_modules/pixi.js/lib/index.mjs");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
-class Game {
-    constructor() {
-        // Initialize the PIXI application
-        this.app = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Application({ width: 800, height: 600 });
-        // Append the PIXI canvas to the HTML body or a specific container
-        document.body.appendChild(this.app.view); // Ensure this happens after app initialization
-        // Optional: Set a background color
-        this.app.renderer.backgroundColor = 0x1099bb;
-        // Start your game setup here
-        this.setup();
+class Vault {
+    constructor(app) {
+        this.app = app;
     }
+    // Method to load assets and set up the vault
     setup() {
-        // Create sprites, add them to the stage, etc.
-        const graphics = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Graphics();
-        graphics.beginFill(0xff0000); // Red color
-        graphics.drawRect(50, 50, 100, 100); // Draw a rectangle
-        graphics.endFill();
-        // Add graphics to the stage
-        this.app.stage.addChild(graphics);
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.loadAssets();
+                this.createVault();
+            }
+            catch (error) {
+                console.error('Failed to load assets:', error);
+            }
+        });
+    }
+    // Load assets using promises
+    loadAssets() {
+        return new Promise((resolve, reject) => {
+            const loader = pixi_js__WEBPACK_IMPORTED_MODULE_0__.loader; // Access the shared loader instance
+            loader
+                .add('bg', 'assets/bg.png')
+                .add('blink', 'assets/blink.png')
+                .add('door', 'assets/door.png')
+                .add('doorOpen', 'assets/doorOpen.png')
+                .add('doorOpenShadow', 'assets/doorOpenShadow.png')
+                .add('handle', 'assets/handle.png')
+                .add('handleShadow', 'assets/handleShadow.png')
+                .add('vault', 'preview/vault.jpg') // Preview
+                .add('vaultOpen', 'preview/vaultOpen.jpg') // Preview
+                .load((_, resources) => {
+                // Check if all resources are loaded
+                if (resources.bg &&
+                    resources.blink &&
+                    resources.door &&
+                    resources.doorOpen &&
+                    resources.doorOpenShadow &&
+                    resources.handle &&
+                    resources.handleShadow &&
+                    resources.vault &&
+                    resources.vaultOpen) {
+                    resolve();
+                }
+                else {
+                    reject('Failed to load one or more assets');
+                }
+            });
+        });
+    }
+    // Method to create the vault sprite and add it to the stage
+    createVault() {
+        const texture = pixi_js__WEBPACK_IMPORTED_MODULE_0__.Texture.from('vault'); // Use the loaded resource
+        this.vaultSprite = new pixi_js__WEBPACK_IMPORTED_MODULE_0__.Sprite(texture);
+        this.vaultSprite.x = 300; // Position X
+        this.vaultSprite.y = 200; // Position Y
+        this.vaultSprite.width = 200; // Set width of the vault
+        this.vaultSprite.height = 200; // Set height of the vault
+        this.app.stage.addChild(this.vaultSprite); // Add to the stage
     }
 }
-// Start the game
-const game = new Game();
 
 })();
 
