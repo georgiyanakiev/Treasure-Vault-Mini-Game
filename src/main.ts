@@ -7,6 +7,7 @@ class Game {
     constructor(app: PIXI.Application) { // Constructor receives the app instance
         this.app = app; // Assign the app instance to the class variable
         this.setup(); // Call the setup method
+        
     }
 
     private setup() {

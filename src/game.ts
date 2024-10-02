@@ -10,6 +10,10 @@ export class Game {
         this.app = app;
         this.setup();
 
+        const door = document.getElementById('door');
+        if (door) {
+            door.appendChild(this.app.view);
+        }
         // Append the PIXI canvas to the HTML body
         document.body.appendChild(this.app.view);
         
