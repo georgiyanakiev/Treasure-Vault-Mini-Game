@@ -1,4 +1,4 @@
-import { Game } from '/src/game.ts';
+import { Game } from './src/game.js'; // Make sure the path is correct
 
 const app = new Game();
-app.start();
+app.start(); // Ensure this method exists in Game

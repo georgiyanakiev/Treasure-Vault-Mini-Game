@@ -21,6 +21,7 @@ export class Game {
         this.createHandle();
         this.setupInteractions();
         this.startAnimation();
+        this.start();
     }
 
     private generateSecretCombination() {
@@ -152,7 +153,12 @@ export class Game {
             }
         });
     }
+
+    public start() {
+        console.log('Game has started!');
+    }
 }
 
 // Start the game
 const game = new Game();
+game.start(); 
