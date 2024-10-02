@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { gsap } from 'gsap';
 
-class Game {
+export class Game {
     private app: PIXI.Application;
     private assets: { [key: string]: PIXI.Texture } = {}; // Store loaded textures
 
@@ -12,7 +12,7 @@ class Game {
 
         // Append the PIXI canvas to the HTML body
         document.body.appendChild(this.app.view);
-
+        
         // Start loading assets
         this.setup();
     }
@@ -25,6 +25,7 @@ class Game {
         } catch (error) {
             console.error('Error loading assets:', error);
         }
+        console.log(this.app.view); 
     }
 
     // Load all game assets including previews using PIXI.loader
