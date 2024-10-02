@@ -34,15 +34,15 @@ export class Game {
             const loader = PIXI.loader; // Use PIXI.loader for older versions
 
             loader
-                .add('bg', 'assets/bg.png')
-                .add('blink', 'assets/blink.png')
-                .add('door', 'assets/door.png')
-                .add('doorOpen', 'assets/doorOpen.png')
-                .add('doorOpenShadow', 'assets/doorOpenShadow.png')
-                .add('handle', 'assets/handle.png')
-                .add('handleShadow', 'assets/handleShadow.png')
-                .add('vault', 'preview/vault.jpg') // Preview
-                .add('vaultOpen', 'preview/vaultOpen.jpg'); // Preview
+                .add('bg', 'bg.png')
+                .add('blink', 'blink.png')
+                .add('door', 'door.png')
+                .add('doorOpen', 'doorOpen.png')
+                .add('doorOpenShadow', 'doorOpenShadow.png')
+                .add('handle', 'handle.png')
+                .add('handleShadow', 'andleShadow.png')
+                .add('vault', 'ault.jpg') // Preview
+                .add('vaultOpen', 'vaultOpen.jpg'); // Preview
 
             loader.load((_, resources) => {
                 if (resources) {
