@@ -19,9 +19,8 @@ class Game {
 
 // 1. Initialize the PIXI Application
 const app = new PIXI.Application({
-    width: 800, // Width of the canvas
-    height: 600, // Height of the canvas
-    backgroundColor: 0x1099bb, // Background color
+    width: 1800, // Width of the canvas
+    height: 1600, // Height of the canvas
 });
 
 // 2. Append the view (canvas) to the DOM
