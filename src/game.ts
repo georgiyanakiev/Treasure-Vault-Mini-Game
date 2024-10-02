@@ -1,17 +1,14 @@
 import * as PIXI from 'pixi.js';
 import { gsap } from 'gsap';
 
-export class Game {
+class Game {
     private app: PIXI.Application;
     private assets: { [key: string]: PIXI.Texture } = {}; // Store loaded textures
 
-    constructor() {
+    constructor(app: PIXI.Application) {
         // Initialize the PIXI application
-        this.app = new PIXI.Application({ 
-            width: 800, 
-            height: 600, 
-            backgroundColor: 0x1099bb 
-        });
+        this.app = app;
+        this.setup();
 
         // Append the PIXI canvas to the HTML body
         document.body.appendChild(this.app.view);
@@ -119,4 +116,6 @@ export class Game {
 }
 
 // Start the game
-const game = new Game();
+const app = new PIXI.Application({ width: 800, height: 600 });
+document.body.appendChild(app.view);
+const game = new Game(app);
