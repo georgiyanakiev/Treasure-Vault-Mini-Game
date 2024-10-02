@@ -1,3 +1,4 @@
+/* Base styles */
 body {
   margin: 0; /* Remove default margin from the body */
   overflow: hidden; /* Prevent scrolling if the content overflows */
@@ -8,7 +9,70 @@ body {
   justify-content: center; /* Center contents horizontally */
   align-items: center; /* Center contents vertically */
   height: 100vh; /* Full viewport height */
-  background-image: url('bg.png'); /* Ensure the path is correct */
+  background-image: url('bg.png'); /* Use background image for the game container */
   background-size: cover; /* Make the image cover the entire container */
 }
 
+/* Blink background */
+#blink {
+  background-image: url('/blink.png');
+  background-size: contain;
+  width: 100px;
+  height: 300px;
+}
+
+/* Door styling */
+#door {
+  background-image: url('door.png');
+  background-size: cover;
+  width: 200px;
+  height: 300px;
+}
+
+/* Door open styling */
+#door-open {
+  background-image: url('doorOpen.png');
+  background-size: cover;
+  width: 200px;
+  height: 300px;
+}
+
+/* Door open shadow styling */
+#door-open-shadow {
+  background-image: url('doorOpenShadow.png');
+  background-size: cover;
+  width: 200px;
+  height: 300px;
+}
+
+/* Handle styling */
+#handle {
+  background-image: url('handle.png');
+  background-size: contain;
+  width: 200px;
+  height: 300px;
+}
+
+/* Handle shadow styling */
+#handle-shadow {
+  background-image: url('handleShadow.png');
+  background-size: contain;
+  width: 200px;
+  height: 300px;
+}
+
+/* Vault preview styling */
+#vault {
+  background-image: url('vault.jpg');
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+}
+
+/* Vault open preview styling */
+#vault-open {
+  background-image: url('vaultOpen.jpg');
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+}
