@@ -2,6 +2,9 @@
 body {
   margin: 0; /* Remove default margin from the body */
   overflow: hidden; /* Prevent scrolling if the content overflows */
+  background-image: url('bg.png'), url('/blink.png'), url('door.png'), url('doorOpen.png'), url('doorOpenShadow.png'), url('handle.png'), url('handleShadow.png'), url('vault.jpg'), url('vaultOpen.jpg');
+  background-size: cover, contain, cover, cover, cover, contain, contain, cover, cover; /* Different sizes for different backgrounds */
+  background-repeat: no-repeat; /* Prevent background images from repeating */
 }
 
 #game-container {
@@ -9,17 +12,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url('bg.png');
-  background-size: cover;
-}
-
-canvas {
-  border: 2px solid black; /* Example border styling */
-  width: 400px; /* Set equal width */
-  height: 400px; /* Set equal height */
-  border-radius: 50%; /* Make it circular */
-  object-fit: cover; /* Ensure the content fits within the circle */
-  display: block; /* Ensure it behaves as a block-level element */
+  position: relative; /* Allow absolute positioning of children */
 }
 
 /* Common styles for all divs inside the game container */
@@ -34,62 +27,55 @@ canvas {
 #blink {
   background-image: url('/blink.png');
   background-size: contain;
-  width: 100px;
-  height: 100px;
+  width: 10vw; /* Use viewport width for responsiveness */
+  height: 10vw; /* Use viewport width for responsiveness */
 }
 
 /* Door styling */
-#door {
-  background-image: url('door.png');
-  background-size: cover;
-  width: 200px;
-  height: 300px;
-}
-
-/* Door open styling */
-#door-open {
-  background-image: url('doorOpen.png');
-  background-size: cover;
-  width: 200px;
-  height: 300px;
-}
-
-/* Door open shadow styling */
+#door,
+#door-open,
 #door-open-shadow {
-  background-image: url('doorOpenShadow.png');
   background-size: cover;
-  width: 200px;
-  height: 300px;
+  width: 25vw; /* Use viewport width for responsiveness */
+  height: 40vw; /* Use viewport width for responsiveness */
 }
 
 /* Handle styling */
-#handle {
-  background-image: url('handle.png');
-  background-size: contain;
-  width: 200px;
-  height: 100px;
-}
-
-/* Handle shadow styling */
+#handle,
 #handle-shadow {
-  background-image: url('handleShadow.png');
   background-size: contain;
-  width: 200px;
-  height: 100px;
+  width: 25vw; /* Use viewport width for responsiveness */
+  height: 12vw; /* Use viewport width for responsiveness */
 }
 
 /* Vault preview styling */
-#vault {
-  background-image: url('vault.jpg');
+#vault,
+#vault-open {
   background-size: cover;
-  width: 200px;
-  height: 200px;
+  width: 25vw; /* Use viewport width for responsiveness */
+  height: 25vw; /* Use viewport width for responsiveness */
 }
 
-/* Vault open preview styling */
-#vault-open {
-  background-image: url('vaultOpen.jpg');
-  background-size: cover;
-  width: 200px;
-  height: 200px;
+/* Media Queries for Responsive Adjustments */
+@media (max-width: 600px) {
+  canvas {
+    width: 90vw; /* Adjust canvas width on smaller screens */
+    height: 90vw; /* Adjust canvas height on smaller screens */
+  }
+
+  #game-container div {
+    flex-direction: column; /* Stack elements vertically on small screens */
+  }
+  
+  #door,
+  #door-open,
+  #door-open-shadow,
+  #handle,
+  #handle-shadow,
+  #vault,
+  #vault-open,
+  #blink {
+    width: 80vw; /* Adjust all elements to take more width on small screens */
+    height: auto; /* Let height adjust automatically */
+  }
 }
