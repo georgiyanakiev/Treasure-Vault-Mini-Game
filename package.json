@@ -1,0 +1,16 @@
+{
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "gsap": "^3.0.0",
+    "pixi.js": "^7.4.2"
+  },
+  "devDependencies": {
+    "vite": "^3.2.11"
+  }
+}
