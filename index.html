@@ -4,37 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Treasure Vault Mini Game</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Adjust path to CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.0.4/pixi.min.js"></script>
 </head>
 <body>
-    <div id="game-container">
-        <!-- Blink element -->
-        <div id="blink"></div>
-
-        <!-- Door element -->
-        <div id="door"></div>
-
-        <!-- Door Open element -->
-        <div id="door-open"></div>
-
-        <!-- Door Open Shadow element -->
-        <div id="door-open-shadow"></div>
-
-        <!-- Handle element -->
-        <div id="handle"></div>
-
-        <!-- Handle Shadow element -->
-        <div id="handle-shadow"></div>
-
-        <!-- Vault Preview element -->
-        <div id="vault"></div>
-
-        <!-- Vault Open Preview element -->
-        <div id="vault-open"></div>
-        
+    <div id="game-container"> 
         <canvas id="app"></canvas> <!-- PIXI.js canvas for the game -->
-    </div>
-    
-    <script type="module" src="src/main.js"></script> <!-- Path to your JavaScript -->
-</body>
+    </div>    
+    <script type="module" src="./dist/index.js"> import * as PIXI from 'https://cdn.skypack.dev/pixi.js';</script> 
 </html>
+</body>

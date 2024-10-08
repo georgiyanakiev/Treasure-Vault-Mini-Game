@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 export class Vault {
     private app: PIXI.Application;
     private vaultSprite!: PIXI.Sprite;

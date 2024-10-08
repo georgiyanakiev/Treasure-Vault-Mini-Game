@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "webpack",
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm",
     "serve": "vite preview"
   },
   "dependencies": {

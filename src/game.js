@@ -1,3 +1,27 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,14 +31,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as PIXI from 'pixi.js';
-import { gsap } from 'gsap';
-export class Game {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Game = void 0;
+const PIXI = __importStar(require("pixi.js"));
+const gsap_1 = require("gsap");
+const assets_1 = require("@pixi/assets");
+class Game {
     constructor(app) {
         this.assets = {}; // Store loaded textures
         // Initialize the PIXI application
         this.app = app;
         this.setup();
+        const door = document.getElementById('door');
+        if (door) {
+            door.appendChild(this.app.view);
+        }
         // Append the PIXI canvas to the HTML body
         document.body.appendChild(this.app.view);
         // Start loading assets
@@ -33,41 +64,29 @@ export class Game {
             console.log(this.app.view);
         });
     }
-    // Load all game assets including previews using PIXI.loader
+    // Load all game assets using Assets from '@pixi/assets'
     loadAllAssets() {
-        return new Promise((resolve, reject) => {
-            const loader = PIXI.loader; // Use PIXI.loader for older versions
-            loader
-                .add('bg', 'assets/bg.png')
-                .add('blink', 'assets/blink.png')
-                .add('door', 'assets/door.png')
-                .add('doorOpen', 'assets/doorOpen.png')
-                .add('doorOpenShadow', 'assets/doorOpenShadow.png')
-                .add('handle', 'assets/handle.png')
-                .add('handleShadow', 'assets/handleShadow.png')
-                .add('vault', 'preview/vault.jpg') // Preview
-                .add('vaultOpen', 'preview/vaultOpen.jpg'); // Preview
-            loader.load((_, resources) => {
-                if (resources) {
-                    // Store the loaded textures in the assets object
-                    this.assets = {
-                        'bg': resources['bg'].texture,
-                        'blink': resources['blink'].texture,
-                        'door': resources['door'].texture,
-                        'doorOpen': resources['doorOpen'].texture,
-                        'doorOpenShadow': resources['doorOpenShadow'].texture,
-                        'handle': resources['handle'].texture,
-                        'handleShadow': resources['handleShadow'].texture,
-                        // Previews
-                        'vault': resources['vault'].texture,
-                        'vaultOpen': resources['vaultOpen'].texture,
-                    };
-                    resolve();
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const assetsToLoad = [
+                    { name: 'bg', url: 'bg.png' },
+                    { name: 'blink', url: 'blink.png' },
+                    { name: 'door', url: 'door.png' },
+                    { name: 'doorOpen', url: 'doorOpen.png' },
+                    { name: 'doorOpenShadow', url: 'doorOpenShadow.png' },
+                    { name: 'handle', url: 'handle.png' },
+                    { name: 'handleShadow', url: 'handleShadow.png' },
+                    { name: 'vault', url: 'vault.jpg' }, // Preview
+                    { name: 'vaultOpen', url: 'vaultOpen.jpg' } // Preview
+                ];
+                for (const asset of assetsToLoad) {
+                    this.assets[asset.name] = yield assets_1.Assets.load(asset.url);
                 }
-                else {
-                    reject('Failed to load assets');
-                }
-            });
+            }
+            catch (error) {
+                console.error('Error loading assets:', error);
+                throw error;
+            }
         });
     }
     createPreviewScene() {
@@ -94,7 +113,7 @@ export class Game {
         const vaultOpenPreview = this.app.stage.getChildByName("vaultOpen");
         if (vaultPreview && vaultOpenPreview) {
             // GSAP animation for vaultPreview
-            gsap.to(vaultPreview.scale, {
+            gsap_1.gsap.to(vaultPreview.scale, {
                 x: 1.1,
                 y: 1.1,
                 duration: 1,
@@ -103,7 +122,7 @@ export class Game {
                 yoyo: true,
             });
             // GSAP animation for vaultOpenPreview
-            gsap.to(vaultOpenPreview, {
+            gsap_1.gsap.to(vaultOpenPreview, {
                 rotation: Math.PI * 2, // 360-degree rotation
                 duration: 3,
                 ease: "power1.inOut",
@@ -113,6 +132,7 @@ export class Game {
         }
     }
 }
+exports.Game = Game;
 // Start the game
 const app = new PIXI.Application({ width: 800, height: 600 });
 document.body.appendChild(app.view);
