@@ -1,27 +1,3 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -31,12 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Game = void 0;
-const PIXI = __importStar(require("pixi.js"));
-const gsap_1 = require("gsap");
-const assets_1 = require("@pixi/assets");
-class Game {
+import * as PIXI from 'pixi.js';
+import { gsap } from 'gsap';
+import { Assets } from '@pixi/assets';
+export class Game {
     constructor(app) {
         this.assets = {}; // Store loaded textures
         // Initialize the PIXI application
@@ -80,7 +54,7 @@ class Game {
                     { name: 'vaultOpen', url: 'vaultOpen.jpg' } // Preview
                 ];
                 for (const asset of assetsToLoad) {
-                    this.assets[asset.name] = yield assets_1.Assets.load(asset.url);
+                    this.assets[asset.name] = yield Assets.load(asset.url);
                 }
             }
             catch (error) {
@@ -113,7 +87,7 @@ class Game {
         const vaultOpenPreview = this.app.stage.getChildByName("vaultOpen");
         if (vaultPreview && vaultOpenPreview) {
             // GSAP animation for vaultPreview
-            gsap_1.gsap.to(vaultPreview.scale, {
+            gsap.to(vaultPreview.scale, {
                 x: 1.1,
                 y: 1.1,
                 duration: 1,
@@ -122,7 +96,7 @@ class Game {
                 yoyo: true,
             });
             // GSAP animation for vaultOpenPreview
-            gsap_1.gsap.to(vaultOpenPreview, {
+            gsap.to(vaultOpenPreview, {
                 rotation: Math.PI * 2, // 360-degree rotation
                 duration: 3,
                 ease: "power1.inOut",
@@ -132,7 +106,6 @@ class Game {
         }
     }
 }
-exports.Game = Game;
 // Start the game
 const app = new PIXI.Application({ width: 800, height: 600 });
 document.body.appendChild(app.view);

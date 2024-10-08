@@ -1,32 +1,6 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Vault = void 0;
-const PIXI = __importStar(require("pixi.js"));
-const gsap_1 = require("gsap");
-class Vault {
+import * as PIXI from 'pixi.js';
+import { gsap } from 'gsap';
+export class Vault {
     constructor(app) {
         this.app = app;
         this.secretCombination = this.generateSecretCombination();
@@ -105,7 +79,7 @@ class Vault {
     }
     rotateHandle(direction) {
         const rotationAmount = direction === 'clockwise' ? Math.PI / 3 : -Math.PI / 3;
-        gsap_1.gsap.to(this.handle, {
+        gsap.to(this.handle, {
             rotation: this.handle.rotation + rotationAmount,
             duration: 0.3
         });
@@ -127,7 +101,7 @@ class Vault {
         this.isLocked = false;
         this.treasure.visible = true;
         this.animateDoorOpen();
-        gsap_1.gsap.to(this.vault, {
+        gsap.to(this.vault, {
             x: this.vault.x - 50,
             rotation: Math.PI / 2,
             duration: 0.5
@@ -138,21 +112,21 @@ class Vault {
         this.doorOpen.visible = true;
         this.doorOpenShadow.visible = true;
         this.door.visible = false;
-        gsap_1.gsap.to(this.doorOpen, {
+        gsap.to(this.doorOpen, {
             x: this.doorOpen.x - 50,
             duration: 0.5,
         });
     }
     animateTreasure() {
         this.treasure.alpha = 0;
-        gsap_1.gsap.to(this.treasure, {
+        gsap.to(this.treasure, {
             alpha: 1,
             duration: 0.5,
             repeat: -1,
             yoyo: true
         });
         this.blinkEffect.visible = true;
-        gsap_1.gsap.to(this.blinkEffect, {
+        gsap.to(this.blinkEffect, {
             alpha: 1,
             duration: 0.5,
             repeat: -1,
@@ -170,7 +144,7 @@ class Vault {
     }
     spinHandle() {
         const spinAmount = Math.PI * 2 * 3;
-        gsap_1.gsap.to(this.handle, {
+        gsap.to(this.handle, {
             rotation: this.handle.rotation + spinAmount,
             duration: 1
         });
@@ -186,4 +160,3 @@ class Vault {
         return combination;
     }
 }
-exports.Vault = Vault;
