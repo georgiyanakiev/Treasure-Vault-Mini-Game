@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setupCounter = void 0;
+exports.setupCounter = setupCounter;
 function setupCounter(element) {
     let counter = 0;
     const setCounter = (count) => {
@@ -10,4 +10,3 @@ function setupCounter(element) {
     element.addEventListener('click', () => setCounter(counter + 1));
     setCounter(0);
 }
-exports.setupCounter = setupCounter;
