@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { gsap } from 'gsap';
+import { Assets } from '@pixi/assets'; 
 
 export class Game {
     private app: PIXI.Application;
@@ -32,44 +33,28 @@ export class Game {
         console.log(this.app.view); 
     }
 
-    // Load all game assets including previews using PIXI.loader
-    private loadAllAssets(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const loader = PIXI.loader; // Use PIXI.loader for older versions
+    // Load all game assets using Assets from '@pixi/assets'
+    private async loadAllAssets(): Promise<void> {
+        try {
+            const assetsToLoad = [
+                { name: 'bg', url: 'bg.png' },
+                { name: 'blink', url: 'blink.png' },
+                { name: 'door', url: 'door.png' },
+                { name: 'doorOpen', url: 'doorOpen.png' },
+                { name: 'doorOpenShadow', url: 'doorOpenShadow.png' },
+                { name: 'handle', url: 'handle.png' },
+                { name: 'handleShadow', url: 'handleShadow.png' },
+                { name: 'vault', url: 'vault.jpg' }, // Preview
+                { name: 'vaultOpen', url: 'vaultOpen.jpg' } // Preview
+            ];
 
-            loader
-                .add('bg', 'bg.png')
-                .add('blink', 'blink.png')
-                .add('door', 'door.png')
-                .add('doorOpen', 'doorOpen.png')
-                .add('doorOpenShadow', 'doorOpenShadow.png')
-                .add('handle', 'handle.png')
-                .add('handleShadow', 'andleShadow.png')
-                .add('vault', 'ault.jpg') // Preview
-                .add('vaultOpen', 'vaultOpen.jpg'); // Preview
-
-            loader.load((_, resources) => {
-                if (resources) {
-                    // Store the loaded textures in the assets object
-                    this.assets = {
-                        'bg': resources['bg'].texture,
-                        'blink': resources['blink'].texture,
-                        'door': resources['door'].texture,
-                        'doorOpen': resources['doorOpen'].texture,
-                        'doorOpenShadow': resources['doorOpenShadow'].texture,
-                        'handle': resources['handle'].texture,
-                        'handleShadow': resources['handleShadow'].texture,
-
-                        // Previews
-                        'vault': resources['vault'].texture,
-                        'vaultOpen': resources['vaultOpen'].texture,
-                    };
-                    resolve();
-                } else {
-                    reject('Failed to load assets');
-                }
-            });
-        });
+            for (const asset of assetsToLoad) {
+                this.assets[asset.name] = await Assets.load(asset.url);
+            }
+        } catch (error) {
+            console.error('Error loading assets:', error);
+            throw error;
+        }
     }
 
     private createPreviewScene() {

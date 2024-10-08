@@ -3,17 +3,19 @@
   "version": "1.0.0",
   "type": "commonjs",
   "scripts": {
-    "start": "node index.js",
+    "start": "vite",
     "dev": "vite",
     "build": "webpack",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@pixi/assets": "^7.4.2",
     "@types/pixi.js": "^4.8.9",
     "gsap": "^3.12.5",
     "pixi.js": "^8.4.1"
   },
   "devDependencies": {
+    "@types/gsap": "^1.20.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.6.2",
     "vite": "^3.2.11",

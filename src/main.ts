@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-
+import { gsap } from 'gsap';
 // Game Class Definition
 class Game {
     private app: PIXI.Application; // Declare a variable to hold the PIXI application
