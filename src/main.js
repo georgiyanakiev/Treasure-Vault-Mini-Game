@@ -1,22 +1,8 @@
 import * as PIXI from 'pixi.js';
-// Game Class Definition
-class Game {
-    constructor(app) {
-        this.app = app; // Assign the app instance to the class variable
-        this.setup(); // Call the setup method
-    }
-    setup() {
-        // Log the canvas to ensure it's defined
-        console.log(this.app.view);
-        // Additional setup code can go here, like loading assets, creating sprites, etc.
-    }
-}
-// 1. Initialize the PIXI Application
-const app = new PIXI.Application({
-    width: 1800, // Width of the canvas
-    height: 1600, // Height of the canvas
-});
-// 2. Append the view (canvas) to the DOM
-document.body.appendChild(app.view); // Adds the canvas to the document body after app initialization
-// 3. Instantiate the Game Class
-const game = new Game(app); // Pass the app instance to the Game class
+import { Vault } from './vault';
+const app = new PIXI.Application({ width: 800, height: 600 });
+document.body.appendChild(app.view);
+// Create a new instance of the Vault game
+const vaultGame = new Vault(app);
+// Call the setup method to initialize the game
+vaultGame.setup();
